@@ -6,7 +6,7 @@ use std::env;
 
 use crate::schema::users;
 
-#[derive(Queryable)]
+#[derive(Debug, Queryable)]
 pub struct User {
     pub id: i32,
     pub username: String,
@@ -29,7 +29,8 @@ impl<'a> NewUser<'a> {
         dotenv().ok();
         let salt = env::var("PASSWORD_HASH_SALT").expect("PASSWORD_HASH_SALT must be set");
         let config = Config::default();
-        let password_hash = argon2::hash_encoded(password.as_bytes(), salt.as_bytes(), &config).unwrap();
+        let password_hash =
+            argon2::hash_encoded(password.as_bytes(), salt.as_bytes(), &config).unwrap();
         let password_hash = password_hash.as_bytes().to_vec();
 
         NewUser {
