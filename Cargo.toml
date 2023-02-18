@@ -22,3 +22,7 @@ path = "backend/src/bin/users/create/main.rs"
 [[bin]]
 name = "update-user"
 path = "backend/src/bin/users/update/main.rs"
+
+[[bin]]
+name = "delete-user"
+path = "backend/src/bin/users/delete/main.rs"
