@@ -1,5 +1,5 @@
-use backend::handlers::users::{create_user, get_user_by_email};
 use backend::database::establish_connection;
+use backend::handlers::users::{create_user, get_user_by_email_or_username};
 
 fn main() {
     let user_email = "user@myemail.com";
@@ -8,8 +8,11 @@ fn main() {
 
     let conn = &mut establish_connection();
     let new_user = create_user(username, user_email, password, conn);
-    println!("Created new user {} with ID={}", new_user.username, new_user.id);
-    let user = match get_user_by_email(conn, &new_user.email) {
+    println!(
+        "Created new user {} with ID={}",
+        new_user.username, new_user.id
+    );
+    let user = match get_user_by_email_or_username(conn, &new_user.email) {
         Ok(Some(user)) => user,
         Ok(None) => {
             panic!("User not found");

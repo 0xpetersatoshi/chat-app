@@ -43,9 +43,12 @@ pub fn update_user(
     Ok(result)
 }
 
-pub fn get_user_by_email(conn: &mut PgConnection, user_email: &str) -> Result<Option<User>, Error> {
+pub fn get_user_by_email_or_username(
+    conn: &mut PgConnection,
+    email_or_username: &str,
+) -> Result<Option<User>, Error> {
     let user = users
-        .filter(email.eq(user_email))
+        .filter(email.eq(email_or_username).or(username.eq(email_or_username)))
         .limit(1)
         .load::<User>(conn)?
         .pop();
