@@ -16,6 +16,15 @@ pub struct User {
     pub updated_at: NaiveDateTime,
 }
 
+// Define a struct to hold the updated values
+#[derive(AsChangeset)]
+#[table_name = "users"]
+pub struct UserChanges {
+    pub username: Option<String>,
+    pub email: Option<String>,
+    pub password_hash: Option<Vec<u8>>,
+}
+
 #[derive(Insertable)]
 #[diesel(table_name = users)]
 pub struct NewUser<'a> {
