@@ -1,7 +1,7 @@
 -- Your SQL goes here
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR(100) NOT NULL,
+  username VARCHAR(100) UNIQUE NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
   password_hash BYTEA NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT now(),
