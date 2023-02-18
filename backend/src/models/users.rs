@@ -18,7 +18,7 @@ pub struct User {
 
 // Define a struct to hold the updated values
 #[derive(AsChangeset)]
-#[table_name = "users"]
+#[diesel(table_name = users)]
 pub struct UserChanges {
     pub username: Option<String>,
     pub email: Option<String>,
