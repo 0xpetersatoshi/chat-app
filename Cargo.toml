@@ -16,5 +16,9 @@ dotenv = "0.15.0"
 path = "backend"
 
 [[bin]]
-name = "users"
-path = "backend/src/bin/users/main.rs"
+name = "create-user"
+path = "backend/src/bin/users/create/main.rs"
+
+[[bin]]
+name = "update-user"
+path = "backend/src/bin/users/update/main.rs"
