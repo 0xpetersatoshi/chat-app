@@ -9,14 +9,12 @@ pub fn create_user(
     new_email: &str,
     new_password: &str,
     conn: &mut PgConnection,
-) {
+) -> User {
     let new_user = NewUser::new(new_username, new_email, new_password);
     diesel::insert_into(users::table)
         .values(&new_user)
-        .execute(conn)
-        .expect("Error adding new user");
-
-    println!("New user {} added!", new_username)
+        .get_result(conn)
+        .expect("Error adding new user")
 }
 
 // delete user
