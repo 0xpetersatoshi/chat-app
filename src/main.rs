@@ -7,7 +7,7 @@ fn main() {
     let password = "password";
 
     let conn = &mut establish_connection();
-    let new_user = create_user(username, user_email, password, conn);
+    let new_user = create_user(conn, username, user_email, password);
     println!(
         "Created new user {} with ID={}",
         new_user.username, new_user.id
