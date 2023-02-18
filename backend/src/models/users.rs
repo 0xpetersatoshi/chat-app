@@ -1,10 +1,9 @@
+use crate::schema::users;
 use argon2::{self, Config};
 use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use dotenv::dotenv;
 use std::env;
-
-use crate::schema::users;
 
 #[derive(Debug, Queryable)]
 pub struct User {
@@ -47,5 +46,27 @@ impl<'a> NewUser<'a> {
             email,
             password_hash,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new_user() {
+        // Set up environment variable
+        env::set_var("PASSWORD_HASH_SALT", "test-salt-value");
+
+        // Create new user
+        let username = "user123";
+        let email = "me@email.com";
+        let password = "strong-password-1234";
+        let user = NewUser::new(username, email, password);
+
+        // Verify fields are set correctly
+        assert_eq!(user.username, username);
+        assert_eq!(user.email, email);
+        assert_ne!(user.password_hash, Vec::<u8>::new());
     }
 }
