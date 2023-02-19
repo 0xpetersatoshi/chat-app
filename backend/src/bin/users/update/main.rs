@@ -1,5 +1,5 @@
 use backend::database::establish_connection;
-use backend::handlers::users::{get_user_by_email, get_user_by_username, update_user};
+use backend::repository::users::{get_user_by_email, get_user_by_username, update_user};
 use backend::models::users::User;
 use std::env;
 

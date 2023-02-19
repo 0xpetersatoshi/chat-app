@@ -1,5 +1,5 @@
 use backend::database::establish_connection;
-use backend::handlers::users::{create_user, get_user_by_email};
+use backend::repository::users::{create_user, get_user_by_email};
 use std::env;
 
 fn main() {
