@@ -1,4 +1,5 @@
 use diesel::prelude::*;
+use diesel::r2d2::{ConnectionManager, Pool};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use dotenv::dotenv;
 use std::env;
@@ -9,14 +10,15 @@ fn run_migration(conn: &mut PgConnection) {
     conn.run_pending_migrations(MIGRATIONS).unwrap();
 }
 
-pub fn establish_connection() -> PgConnection {
+pub fn establish_connection() -> Pool<ConnectionManager<PgConnection>> {
     dotenv().ok();
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let mut connection = PgConnection::establish(&database_url)
-        .expect(&format!("Error connecting to {}", database_url));
+    let manager = ConnectionManager::<PgConnection>::new(database_url);
+    let pool = Pool::builder().build(manager).expect("Failed to create database pool");
 
-    run_migration(&mut connection);
+    let mut conn = pool.get().unwrap();
+    run_migration(&mut conn);
 
-    connection
+    pool
 }

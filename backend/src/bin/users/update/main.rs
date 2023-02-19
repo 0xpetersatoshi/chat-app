@@ -13,17 +13,18 @@ fn main() {
     let old_value = &args[2];
     let new_value = &args[3];
 
-    let conn = &mut establish_connection();
+    let pool = establish_connection();
+    let mut conn = pool.get().unwrap();
     let user: User;
 
     if update_field == "email" {
-        user = match get_user_by_email(conn, old_value) {
+        user = match get_user_by_email(&mut conn, old_value) {
             Ok(Some(u)) => u,
             Ok(None) => panic!("No user with username {} was found", old_value),
             Err(e) => panic!("Error: {}", e),
         };
     } else {
-        user = match get_user_by_username(conn, old_value) {
+        user = match get_user_by_username(&mut conn, old_value) {
             Ok(Some(u)) => u,
             Ok(None) => panic!("No user with username {} was found", old_value),
             Err(e) => panic!("Error: {}", e),
@@ -31,7 +32,7 @@ fn main() {
     }
 
     let result: Result<(), String> =
-        match update_user(conn, user.id, Some(new_value.clone()), None, None) {
+        match update_user(&mut conn, user.id, Some(new_value.clone()), None, None) {
             Ok(_) => Ok(()),
             Err(e) => panic!("Error: {}", e),
         };

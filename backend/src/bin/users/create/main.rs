@@ -12,13 +12,14 @@ fn main() {
     let username = &args[2];
     let password = &args[3];
 
-    let conn = &mut establish_connection();
-    let new_user = create_user(conn, username, user_email, password);
+    let pool = establish_connection();
+    let mut conn = pool.get().unwrap();
+    let new_user = create_user(&mut conn, username, user_email, password);
     println!(
         "Created new user {} with ID={}",
         new_user.username, new_user.id
     );
-    let user = match get_user_by_email(conn, &new_user.email) {
+    let user = match get_user_by_email(&mut conn, &new_user.email) {
         Ok(Some(user)) => user,
         Ok(None) => {
             panic!("User not found");
