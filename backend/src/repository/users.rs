@@ -90,3 +90,8 @@ pub fn get_user_by_id(
         None => Ok(None),
     }
 }
+
+pub fn get_all_users(conn: &mut PgConnection) -> Result<Vec<User>, Error> {
+    let results = users.load::<User>(conn).expect("Error loading users");
+    Ok(results)
+}

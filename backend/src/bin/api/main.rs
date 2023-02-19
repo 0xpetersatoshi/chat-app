@@ -14,6 +14,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(data.clone())
             .service(handlers::users::get_user_by_id)
+            .service(handlers::users::get_all_users)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
