@@ -7,8 +7,9 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.3.0"
-chrono = "0.4.23"
+chrono = { version = "0.4.23", features = ["serde"] }
 diesel = { version = "2.0.3", features = ["extras", "postgres"] }
 diesel_migrations = "2.0.0"
 dotenv = "0.15.0"
 rust-argon2 = "1.0.0"
+serde = "1.0.152"

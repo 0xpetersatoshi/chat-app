@@ -261,6 +261,7 @@ dependencies = [
  "diesel_migrations",
  "dotenv",
  "rust-argon2",
+ "serde",
 ]
 
 [[package]]
@@ -385,6 +386,7 @@ dependencies = [
  "js-sys",
  "num-integer",
  "num-traits",
+ "serde",
  "time 0.1.45",
  "wasm-bindgen",
  "winapi",

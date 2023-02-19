@@ -3,9 +3,10 @@ use argon2::{self, Config};
 use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use dotenv::dotenv;
+use serde::{Deserialize, Serialize};
 use std::env;
 
-#[derive(Debug, Queryable)]
+#[derive(Debug, Queryable, Deserialize, Serialize)]
 pub struct User {
     pub id: i32,
     pub username: String,
