@@ -1,4 +1,4 @@
-use crate::models::users::{NewUser, User, UserChanges};
+use crate::models::users::{NewUser, User, UserChanges, UserResponse};
 use crate::schema::users;
 use crate::schema::users::dsl::*;
 use diesel::prelude::*;
@@ -66,12 +66,27 @@ pub fn get_user_by_username(
     Ok(user)
 }
 
-pub fn get_user_by_id(conn: &mut PgConnection, user_id: i32) -> Result<Option<User>, Error> {
-    let user = users
+pub fn get_user_by_id(
+    conn: &mut PgConnection,
+    user_id: i32,
+) -> Result<Option<UserResponse>, Error> {
+    let user: Option<User> = users
         .filter(id.eq(user_id))
         .limit(1)
         .load::<User>(conn)?
         .pop();
 
-    Ok(user)
+    match user {
+        Some(u) => {
+            let user_response = UserResponse {
+                id: u.id,
+                username: u.username,
+                email: u.email,
+                created_at: u.created_at,
+                updated_at: u.updated_at,
+            };
+            Ok(Some(user_response))
+        }
+        None => Ok(None),
+    }
 }

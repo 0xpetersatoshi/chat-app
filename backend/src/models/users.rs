@@ -16,6 +16,15 @@ pub struct User {
     pub updated_at: NaiveDateTime,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+pub struct UserResponse {
+    pub id: i32,
+    pub username: String,
+    pub email: String,
+    pub created_at: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
+}
+
 // Define a struct to hold the updated values
 #[derive(AsChangeset)]
 #[diesel(table_name = users)]

@@ -1,4 +1,3 @@
-use actix_web::web::Data;
 use actix_web::{App, HttpServer, web};
 use backend::database::establish_connection;
 use backend::handlers;
